@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- Bootstrap CSS -->
+	<link href="./css/bootstrap.min.css" rel="stylesheet">
+
+	<title>Wallpaper's json downloader</title>
+	<style>
+		/* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+		.row.content {
+			height: 972px
+		}
+
+		/* Set gray background color and 100% height */
+		.sidenav {
+			background-color: #f1f1f1;
+			height: 100%;
+		}
+
+		/* Set black background color, white text and some padding */
+		footer {
+			background-color: #555;
+			color: white;
+			padding: 15px;
+		}
+
+		/* On small screens, set height to 'auto' for sidenav and grid */
+		@media screen and (max-width: 767px) {
+			.sidenav {
+				height: auto;
+				padding: 15px;
+			}
+
+			.row.content {
+				height: auto;
+			}
+		}
+
+		.collections-container,
+		.wallpapers-container {
+			height: 800px;
+			overflow: auto;
+		}
+
+		.collections-container .card {
+			margin: 15px auto;
+		}
+
+		.wallpapers-container .card {
+			margin: 15px;
+			display: inline-block;
+		}
+
+		.wallpapers-container .card img {
+			width: 286px;
+			height: 190px;
+			object-fit: cover;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container-fluid">
+		<div class="row content">
+			<div class="col-sm-3 sidenav">
+				<h4>Search collections</h4>
+				<div class="input-group">
+					<input type="text" class="form-control collection-search" placeholder="Search collection">
+				</div>
+				<div class="collections-info"></div>
+				<div class="collections-container"></div>
+			</div>
+
+			<div class="col-sm-9">
+				<h4><small>Photos</small></h4>
+				<hr>
+				<div class="wallpapers-container"></div>
+			</div>
+		</div>
+	</div>
+
+	<footer class="container-fluid">
+		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+			Set API Info
+		</button>
+	</footer>
+
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="mb-3 row">
+						<label for="inputPassword" class="col-sm-2 col-form-label">Access Key</label>
+						<div class="col-sm-10">
+							<input class="form-control form-control-lg api-info-key" type="text"
+								placeholder="access key" aria-label=".form-control-lg example">
+						</div>
+					</div>
+
+					<div class="mb-3 row">
+						<label for="inputPassword" class="col-sm-2 col-form-label">Download index</label>
+						<div class="col-sm-10">
+							<input class="form-control form-control-lg api-info-download-index" type="number"
+								placeholder="index" aria-label=".form-control-lg example">
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary api-info-save" data-bs-dismiss="modal">Save
+						changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script id="collection-template" type="text/x-handlebars-template">
+		<div class="card" style="width: 18rem;">
+			<img src="{{cover_photo.urls.thumb}}" class="card-img-top" alt="{{title}}">
+			<div class="card-body">
+			  <h5 class="card-title">{{title}}</h5>
+			  <p class="card-text">{{description}}</p>
+			  <button type="button" data-collection-id="{{id}}" class="btn btn-primary collection-select">Select</button>
+			</div>
+		  </div>
+	</script>
+
+	<script id="wallpaper-template" type="text/x-handlebars-template">
+		<div class="card" style="width: 18rem;">
+			<img src="{{urls.thumb}}" class="card-img-top" alt="{{location.title}}">
+			<div class="card-body">
+			  <p class="card-text">{{location.title}}</p>
+			  <button type="button" data-wallpaper-id="{{id}}" class="btn btn-primary wallpaper-download">Download</button>
+			</div>
+		  </div>
+	</script>
+
+	<script src="js/jquery-3.6.0.js"></script>
+	<script src="./js/bootstrap.bundle.min.js"></script>
+	<script src="./js/handlebars.js"></script>
+	<script src="./js/wallpaperDownload.js"></script>
+
+</body>
+
+</html>

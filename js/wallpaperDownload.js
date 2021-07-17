@@ -1,7 +1,6 @@
 $(document).ready(function () {
     const baseUrl = 'https://api.unsplash.com';
     var apiKey = '';
-    const authParam = `client_id=${apiKey}`;
     const toJson = res => res.json();
 
     var data = {
@@ -16,7 +15,7 @@ $(document).ready(function () {
         collectionsContainer.empty();
         var source = document.getElementById("collection-template").innerHTML;
         var template = Handlebars.compile(source);
-        fetch(`${baseUrl}/search/collections?${authParam}&query=${query}&page=${page}&per_page=${per_page}`)
+        fetch(`${baseUrl}/search/collections?client_id=${apiKey}&query=${query}&page=${page}&per_page=${per_page}`)
             .then(toJson)
             .then(res => {
                 const info = `total: ${res.total} | total_pages: ${res.total_pages} | fetched count: ${res.results.length}`;
@@ -39,7 +38,7 @@ $(document).ready(function () {
         wallpapersContainer.empty();
         var source = document.getElementById("wallpaper-template").innerHTML;
         var template = Handlebars.compile(source);
-        fetch(`${baseUrl}/collections/${collectionId}/photos?${authParam}&page=${page}&per_page=${per_page}`)
+        fetch(`${baseUrl}/collections/${collectionId}/photos?client_id=${apiKey}&page=${page}&per_page=${per_page}`)
             .then(toJson)
             .then(wallpapers => {
                 wallpapers.forEach(wallpaper => {
@@ -64,6 +63,7 @@ $(document).ready(function () {
         const collectionSelectBtn = $(".collection-select");
         collectionSelectBtn.unbind("click");
         collectionSelectBtn.on("click", e => {
+			$(e.target).addClass("btn-success");
             const collectionId = $(e.target).attr("data-collection-id");
             doFetchCollectionPhotos(collectionId, 1, 100);
         });
@@ -76,7 +76,7 @@ $(document).ready(function () {
             const wallpaperId = $(e.target).attr("data-wallpaper-id");
             downlodWallpper(wallpaperId, (itemNumber) => {
                 $(e.target).text(`Downloaded(${itemNumber})`);
-                $(e.target).setClass("success");
+                $(e.target).addClass("btn-success");
             });
         });
     }

@@ -1,0 +1,5 @@
+{
+    "total": 300,
+    "pageSize": 1,
+    "fileNamePattern": "<number>.json"
+}
